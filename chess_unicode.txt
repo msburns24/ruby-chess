@@ -1,0 +1,15 @@
+White Pieces
+King ♔
+Queen ♕
+Rook ♖
+Bishop ♗
+Knight ♘
+Pawn ♙
+
+Black Pieces
+King ♚
+Queen ♛
+Rook ♜
+Bishop ♝
+Knight ♞
+Pawn ♟︎
