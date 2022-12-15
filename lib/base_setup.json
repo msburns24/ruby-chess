@@ -1,0 +1,40 @@
+[
+  // Black Pieces
+  [0,0,"black","rook"],
+  [1,0,"black","knight"],
+  [2,0,"black","bishop"],
+  [3,0,"black","king"],
+  [4,0,"black","queen"],
+  [5,0,"black","bishop"],
+  [6,0,"black","knight"],
+  [7,0,"black","rook"],
+  
+  [0,1,"black","pawn"],
+  [1,1,"black","pawn"],
+  [2,1,"black","pawn"],
+  [3,1,"black","pawn"],
+  [4,1,"black","pawn"],
+  [5,1,"black","pawn"],
+  [6,1,"black","pawn"],
+  [7,1,"black","pawn"],
+
+
+  // White Pieces
+  [0,6,"white","pawn"],
+  [1,6,"white","pawn"],
+  [2,6,"white","pawn"],
+  [3,6,"white","pawn"],
+  [4,6,"white","pawn"],
+  [5,6,"white","pawn"],
+  [6,6,"white","pawn"],
+  [7,6,"white","pawn"],
+
+  [0,7,"white","rook"],
+  [1,7,"white","knight"],
+  [2,7,"white","bishop"],
+  [3,7,"white","king"],
+  [4,7,"white","queen"],
+  [5,7,"white","bishop"],
+  [6,7,"white","knight"],
+  [7,7,"white","rook"]
+]

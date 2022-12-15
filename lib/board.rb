@@ -9,7 +9,7 @@ class Board
 
   def create_squares
     squares = []
-    colors = [:black, :white]
+    colors = [:white, :black]
     (0..7).each do |row|
       squares << []
       (0..7).each do |col|
