@@ -11,6 +11,7 @@ class Square
   def add_piece(piece)
     return false if @piece
     @piece = piece
+    piece.square = self
   end
 
   def remove_piece
