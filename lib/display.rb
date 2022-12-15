@@ -23,6 +23,8 @@ class Display
         print "    ".colorize(:color => :black, :background => white_square)
       end
       print "\n"
+
+      # TODO: Creat board with chess pieces (default layout)
     end
 
     puts ""
