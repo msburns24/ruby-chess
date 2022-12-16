@@ -1,6 +1,5 @@
-require_relative 'lib/display.rb'
-require_relative 'lib/board.rb'
+require_relative 'lib/game.rb'
 
-test_board = Board.new
+test_game = Game.new
 system 'cls'
-puts test_board
+puts test_game.board

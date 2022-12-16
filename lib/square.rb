@@ -1,7 +1,9 @@
+require 'colorize'
+
 class Square
   attr_reader :color, :row, :col, :piece
 
-  def initialize(col, row, color)
+  def initialize(row, col, color)
     @color = color
     @row = row
     @col = col
@@ -22,6 +24,6 @@ class Square
     str_return = " "
     str_return += (@piece.nil? ? " " : @piece.to_s)
     str_return += "  "
-    return str_return.colorize(:background => color)
+    return str_return.colorize(:background => color.to_sym)
   end
 end
