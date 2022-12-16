@@ -25,13 +25,27 @@ class Board
     @squares = squares
   end
 
-  def open_square?(row, col)
+  def open_square?(row, col, move_color)
     return false unless (row.between?(0,7) && col.between?(0,7))
-    return @squares[row][col] if @squares[row][col].piece.nil?
+    
+    if @squares[row][col].piece.nil?
+      return @squares[row][col], false
+    elsif @squares[row][col].piece.color != move_color
+      return @squares[row][col], true
+    else
+      return nil, false
+    end
   end
 
   def setup_pieces(player_color)
-    pieces_array = []
+    pieces_hash = {}
+    # Piece classes is used to lookup a type (string) and return
+    # the correct class
+    piece_classes = {
+      "king" => King, "queen" => Queen, "bishop" => Bishop,
+      "knight" => Knight, "rook" => Rook, "pawn" => Pawn
+    }
+    piece_classes.keys.each { |type| pieces_hash[type] = [] }
 
     setup_file = "lib/base_setup.json"
     piece_data_array = JSON.parse(File.read(setup_file))
@@ -42,30 +56,11 @@ class Board
       type = piece_data[3]
 
       next unless color == player_color
-
-      # TODO - Refactor this with a hash of classes
-      # Take advantage of square#add_piece method
-      case type
-      when "king"
-        @squares[row][col].add_piece King.new(self, color)
-      when "queen"
-        @squares[row][col].add_piece Queen.new(self, color)
-      when "bishop"
-        @squares[row][col].add_piece Bishop.new(self, color)
-      when "knight"
-        @squares[row][col].add_piece Knight.new(self, color)
-      when "rook"
-        @squares[row][col].add_piece Rook.new(self, color)
-      when "pawn"
-        @squares[row][col].add_piece Pawn.new(self, color)
-      else
-        puts "Okay, something went wrong here with the type. No match."
-      end
-
-      pieces_array << @squares[row][col].piece
+      @squares[row][col].add_piece( piece_classes[type].new(self, color) )
+      pieces_hash[type] << @squares[row][col].piece
     end
 
-    return pieces_array
+    return pieces_hash
   end
 
   def to_s

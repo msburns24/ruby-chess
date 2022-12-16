@@ -26,7 +26,7 @@ class Bishop < Piece
     (1..distance).each do |mult|
       row_i = @square.row + base_move[0]*mult
       col_i = @square.col + base_move[1]*mult
-      return false unless @board.open_square?(row_i, col_i)
+      return false unless @board.open_square?(row_i, col_i, @color)
     end
 
     return true

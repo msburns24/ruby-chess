@@ -10,7 +10,9 @@ class Piece
   end
 
   def move_piece(row, col)
-    new_square = @board.open_square?(row, col)
+    # TODO - handle if piece is taking opponent's piece
+    # How to get opponent's @piece variable?
+    new_square, taking_piece = @board.open_square?(row, col, @color)
     if new_square
       @square.remove_piece
       @square = new_square
@@ -37,7 +39,7 @@ class Piece
   # For all pieces but bishop, queen, & rook
   def valid_move?(new_row, new_col)
     # TODO - (King) move is only valid if it doesn't put player in check
-    @board.open_square?(new_row, new_col)
+    @board.open_square?(new_row, new_col, @color)
   end
 
   def to_s
