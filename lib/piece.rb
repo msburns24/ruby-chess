@@ -1,12 +1,13 @@
 class Piece
   attr_accessor :square
-  attr_reader :color, :row, :col
+  attr_reader :color, :row, :col, :long_move_piece
   def initialize(board, color)
     @board = board
     @color = color
     @text = ""
     @square = nil
     @movements = []
+    @long_move_piece = false # Override on bishop/queen/rook
   end
 
   def move_piece(row, col)
@@ -22,24 +23,19 @@ class Piece
     return false
   end
 
-  def get_available_moves
-    @available_moves = []
+  def potential_moves
+    @potential_moves = []
     row = @square.row
     col = @square.col
     @movements.each do |movement|
       new_row = row + movement[0]
       new_col = col + movement[1]
-      if valid_move?(new_row, new_col)
-        @available_moves << [new_row, new_col]
+      if (new_row.between?(0,7) && new_col.between?())
+      if @board.open_square?(new_row, new_col, @color)
+        @potential_moves << [new_row, new_col]
       end
     end
-    @available_moves
-  end
-
-  # For all pieces but bishop, queen, & rook
-  def valid_move?(new_row, new_col)
-    # TODO - (King) move is only valid if it doesn't put player in check
-    @board.open_square?(new_row, new_col, @color)
+    @potential_moves
   end
 
   def to_s

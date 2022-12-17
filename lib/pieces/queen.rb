@@ -7,6 +7,7 @@ class Queen < Piece
     super(board, color)
     pieces_text = JSON.parse(File.read("lib/pieces/unicode_pieces.json"))
     @text = pieces_text[color.to_s]["queen"]
+    @long_move_piece = true
   end
 
   def setup_movements

@@ -26,7 +26,7 @@ class Board
   end
 
   def open_square?(row, col, move_color)
-    return false unless (row.between?(0,7) && col.between?(0,7))
+    return nil, false unless (row.between?(0,7) && col.between?(0,7))
     
     if @squares[row][col].piece.nil?
       return @squares[row][col], false
