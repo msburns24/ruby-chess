@@ -3,10 +3,10 @@ require 'json'
 
 class Knight < Piece
 
-  def initialize(board, color)
-    super(board, color)
+  def initialize(board, player)
+    super(board, player)
     pieces_text = JSON.parse(File.read("lib/pieces/unicode_pieces.json"))
-    @text = pieces_text[color.to_s]["knight"]
+    @text = pieces_text[player.color.to_s]["knight"]
   end
 
   def setup_movements

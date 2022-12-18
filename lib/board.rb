@@ -25,19 +25,7 @@ class Board
     @squares = squares
   end
 
-  def open_square?(row, col, move_color)
-    return nil, false unless (row.between?(0,7) && col.between?(0,7))
-    
-    if @squares[row][col].piece.nil?
-      return @squares[row][col], false
-    elsif @squares[row][col].piece.color != move_color
-      return @squares[row][col], true
-    else
-      return nil, false
-    end
-  end
-
-  def setup_pieces(player_color)
+  def setup_pieces(player)
     pieces_hash = {}
     # Piece classes is used to lookup a type (string) and return
     # the correct class
@@ -55,12 +43,21 @@ class Board
       color = piece_data[2]
       type = piece_data[3]
 
-      next unless color == player_color
-      @squares[row][col].add_piece( piece_classes[type].new(self, color) )
+      next unless color == player.color
+      @squares[row][col].add_piece( piece_classes[type].new(self, player) )
       pieces_hash[type] << @squares[row][col].piece
     end
 
     return pieces_hash
+  end
+
+  def open_square?(row, col)
+    @squares[row][col].piece.nil?
+  end
+
+  def capture?(piece, row, col)
+    occupied_color = @squares[row][col].piece.color
+    return (piece.color != occupied_color)
   end
 
   def to_s

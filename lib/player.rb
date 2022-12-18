@@ -29,27 +29,28 @@ class Player
 
   # For all pieces but bishop, queen, & rook
   def valid_move?(piece, new_row, new_col)
-    return false unless not_jumping?(piece, new_row, new_col)
-    return false unless @board.open_square?(new_row, new_col, @color)
-    # TODO - (King) move is only valid if it doesn't put player in check
+    return false if @board[new_row][new_col].piece.color == @color # If it's occupied by player
+    return false if illegal_jump?(piece, new_row, new_col)
+    # TODO - returns false if, by simulating this move, it puts player in check.
     return true
   end
 
-  def not_jumping?(piece, new_row, new_col)
-    return true unless piece.long_move_piece
+  def illegal_jump?(piece, new_row, new_col)
+    return false unless piece.long_move_piece
 
     row_change = new_row - piece.square.row
     col_change = new_col - piece.square.col
     distance = [row_change.abs(), col_change.abs()].max
+    return false if distance == 1
 
     base_move = [row_change/distance, col_change/distance]
-    (1..distance).each do |mult|
+    (1..(distance-1)).each do |mult|
       row_i = piece.square.row + base_move[0]*mult
       col_i = piece.square.col + base_move[1]*mult
-      return false unless @board.open_square?(row_i, col_i, @color)
+      return true unless @board.open_square?(row_i, col_i)
     end
 
-    return true
+    return false
   end
 
   def check?
@@ -61,7 +62,19 @@ class Player
     return false
   end
 
-  # TODO - Add #checkmate? method
+  def game_over?
+    @moves.values.each do |move_list|
+      return false unless move_list.empty?
+    end
+    return true
+  end
 
-  # TODO - Create computer version of player
+  def checkmate?
+    game_over? && check?
+  end
+
+  def stalemate?
+    game_over? && !check?
+  end
+
 end

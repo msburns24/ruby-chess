@@ -3,11 +3,12 @@ require 'json'
 
 class Pawn < Piece
 
-  def initialize(board, color)
-    super(board, color)
+  def initialize(board, player)
+    super(board, player)
     pieces_text = JSON.parse(File.read("lib/pieces/unicode_pieces.json"))
-    @text = pieces_text[color.to_s]["pawn"]
+    @text = pieces_text[player.color.to_s]["pawn"]
     @made_first_move = false
+    @long_move_piece = true # Only for first move
   end
   
   def setup_movements
@@ -18,6 +19,7 @@ class Pawn < Piece
   def move_piece(row, col)
     if super(row, col)
       @made_first_move = true
+      @long_move_piece = false
       setup_movements
     end
   end

@@ -3,10 +3,10 @@ require 'json'
 
 class Rook < Piece
 
-  def initialize(board, color)
-    super(board, color)
+  def initialize(board, player)
+    super(board, player)
     pieces_text = JSON.parse(File.read("lib/pieces/unicode_pieces.json"))
-    @text = pieces_text[color.to_s]["rook"]
+    @text = pieces_text[player.color.to_s]["rook"]
     @long_move_piece = true
   end
 
@@ -17,20 +17,5 @@ class Rook < Piece
         @movements << base.map { |dir| dir*mult }
       end
     end
-  end
-
-  def valid_move?(new_row, new_col)
-    row_change = new_row - @square.row
-    col_change = new_col - @square.col
-    distance = [row_change.abs(), col_change.abs()].max
-
-    base_move = [row_change/distance, col_change/distance]
-    (1..distance).each do |mult|
-      row_i = @square.row + base_move[0]*mult
-      col_i = @square.col + base_move[1]*mult
-      return false unless @board.open_square?(row_i, col_i, @color)
-    end
-
-    return true
   end
 end

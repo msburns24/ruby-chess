@@ -16,6 +16,4 @@ class Game
     @black_player.find_available_moves
   end
 
-  # TODO - Create turns cycle
-  # TODO - Interpret "Knight B6" into [piece, row, col]
 end
