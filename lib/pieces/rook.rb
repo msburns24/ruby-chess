@@ -3,10 +3,10 @@ require 'json'
 
 class Rook < Piece
 
-  def initialize(board, player)
-    super(board, player)
+  def initialize(board, player, color = nil)
+    super(board, player, color)
     pieces_text = JSON.parse(File.read("lib/pieces/unicode_pieces.json"))
-    @text = pieces_text[player.color.to_s]["rook"]
+    @text = pieces_text[@color.to_s]["rook"]
     @long_move_piece = true
   end
 

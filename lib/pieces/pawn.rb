@@ -3,10 +3,12 @@ require 'json'
 
 class Pawn < Piece
 
-  def initialize(board, player)
-    super(board, player)
+  # TODO - Constrain pawn's moves to only capture at a diagonal
+
+  def initialize(board, player, color = nil)
+    super(board, player, color)
     pieces_text = JSON.parse(File.read("lib/pieces/unicode_pieces.json"))
-    @text = pieces_text[player.color.to_s]["pawn"]
+    @text = pieces_text[@color.to_s]["pawn"]
     @made_first_move = false
     @long_move_piece = true # Only for first move
   end

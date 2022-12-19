@@ -1,10 +1,10 @@
 class Piece
   attr_accessor :square
-  attr_reader :color, :row, :col, :long_move_piece
-  def initialize(board, player)
+  attr_reader :color, :long_move_piece
+  def initialize(board, player, color = nil)
     @board = board
     @player = player
-    @color = player.color
+    @color = (color.nil? ? @player.color : color)
     @text = ""
     @square = nil
     @movements = []
@@ -12,16 +12,21 @@ class Piece
   end
 
   def move_piece(row, col)
-    # TODO - Change logic to include #valid_move?
-    # How to get opponent's @piece variable?
-    # new_square, taking_piece = @board.open_square?(row, col, @color)
-    if new_square
-      @square.remove_piece
-      @square = new_square
-      @square.add_piece(self)
-      return true
+    return false unless @player.valid_move?(self, row, col)
+    
+    # Remove opponent's piece if capture.
+    if capture?(self, row, col)
+      opp_piece = @board[row][col].piece
+      @board[row][col].piece = nil            # Remove piece from board
+      @player.opponent.lose_piece(opp_piece)  # Remove piece from opp's pieces
     end
-    return false
+
+    prev_square = @square
+    new_square = @board[row][col]
+    new_square.piece = self
+    @square = new_square
+    prev_square.piece = nil
+    return true
   end
 
   def potential_moves
@@ -35,6 +40,10 @@ class Piece
       @potential_moves << [new_row, new_col]
     end
     @potential_moves
+  end
+
+  def pos
+    [@square.row, @square.col]
   end
 
   def to_s

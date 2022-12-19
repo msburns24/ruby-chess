@@ -1,7 +1,8 @@
 require 'colorize'
 
 class Square
-  attr_reader :color, :row, :col, :piece
+  attr_reader :color, :row, :col
+  attr_accessor :piece
 
   def initialize(row, col, color)
     @color = color
